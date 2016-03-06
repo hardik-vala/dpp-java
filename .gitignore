@@ -1,2 +1,5 @@
 # Stupid Mac directory utility files
 .DS_Store
+
+# Java class binaries
+bin/
