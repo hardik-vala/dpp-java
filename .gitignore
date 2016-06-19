@@ -2,4 +2,4 @@
 .DS_Store
 
 # Java class binaries
-bin/
+*.class
