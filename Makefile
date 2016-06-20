@@ -1,5 +1,5 @@
 compile: reset
-	javac -d bin src/problems/*.java
+	javac src/problems/*.java
 
 reset:
-	rm -rf bin/*.class
+	rm -rf src/problems/*.class
