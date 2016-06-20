@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import problems.ChessMetric;
+
 import java.util.ArrayList;
 
 import org.junit.BeforeClass;

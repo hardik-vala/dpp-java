@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import problems.BadNeighbours;
+
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

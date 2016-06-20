@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import problems.AvoidRoads;
+
 import java.util.ArrayList;
 
 import org.junit.BeforeClass;

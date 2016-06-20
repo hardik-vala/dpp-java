@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import problems.FlowerGarden;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class FlowerGardanTest {
+public class FlowerGardenTest {
 
 	private static final ArrayList<int[]> heights = new ArrayList<int[]>();
 	private static final ArrayList<int[]> blooms = new ArrayList<int[]>();
