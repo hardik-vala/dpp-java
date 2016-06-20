@@ -2,10 +2,11 @@ package problems;
 
 
 /**
- * Determines all subsequences of a list that are palindrome. For example, the
- * string "abca" (a list of letters), has 7 palindrome subsequences, which are,
+ * The description and specifications of the <i>Stock Maximize</i> problem are provided here:
  * 
- * @author Hardik
+ * https://www.hackerrank.com/challenges/stockmax
+ * 
+ * @author Hardik Vala
  */
 public class StockMaximize {
 	
