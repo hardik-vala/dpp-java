@@ -1,5 +1,7 @@
 # Stupid Mac directory utility files
 .DS_Store
 
-# Java class binaries
-*.class
+# sbt
+project/
+target/
+
