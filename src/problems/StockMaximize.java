@@ -25,11 +25,12 @@ public class StockMaximize {
 	}
 
 	/**
-	 * Calculates the max. profit attainable by the last day.
+	 * Calculates the max. profit attainable by the last day using dynamic programming, resulting in
+	 * an O(N**2) solution, where N is the # of days.
 	 *
 	 * @return Max. profit.
 	 */
-	public long calculate() {
+	public long calculateDP() {
 		for (int i = 1; i < this.prices.length; i++) {
 			// Max. profit for day i.
             long maxProfit = 0;
@@ -59,4 +60,28 @@ public class StockMaximize {
         
         return this.maxProfits[this.prices.length - 1];
 	}
+
+	/**
+	 * Calculates the max. profit attainable by the last day without dynamic programming, resulting
+	 * in a O(N) solution, where N is the # of days.
+	 *
+	 * @return Max. profit.
+	 */
+	public long calculateNonDP() {
+        if (this.prices.length <= 1) return 0;
+        
+        long maxProfit = 0;
+        int price = this.prices[this.prices.length - 1];
+        // Iterate over the price on each day in reverse order.
+        for (int i = this.prices.length - 2; i >= 0; i--) {
+        	// If the price on day i is lower, than buy the stock and sell at the later higher
+        	// price. Otherwise, consider selling at a new price on day i.
+            if (this.prices[i] > price)
+                price = this.prices[i];
+            else
+                maxProfit += price - this.prices[i];
+        }
+        
+        return maxProfit;
+    }
 }
