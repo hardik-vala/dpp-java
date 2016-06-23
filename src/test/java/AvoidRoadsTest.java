@@ -2,40 +2,33 @@ import static org.junit.Assert.*;
 
 import problems.AvoidRoads;
 
-import java.util.ArrayList;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 public class AvoidRoadsTest {
 
-	private static final int[] widths = {6, 1, 35, 2};
-	private static final int[] lengths = {6, 1, 31, 2};
-	private static final ArrayList<String[]> bads = new ArrayList<String[]>();
-	
-	private static final long[] numWays = {252, 2, Long.parseLong("6406484391866534976"), 0};
-	
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		String[] b1 = {"0 0 0 1", "6 6 5 6"};
-		bads.add(b1);
-		
-		String[] b2 = {};
-		bads.add(b2);
-		
-		String[] b3 = {};
-		bads.add(b3);
-		
-		String[] b4 = {"0 0 1 0", "1 2 2 2", "1 1 2 1"};
-		bads.add(b4);
+	@Test
+	public void testModeratelySizedCityWithFewBadBlocks() {
+		AvoidRoads ar = new AvoidRoads(6, 6, new String[] {"0 0 0 1", "6 6 5 6"});
+		assertEquals(ar.count(), 252L);
 	}
 
 	@Test
-	public void testNumWays () {
-		for (int i = 0; i < widths.length; i++) {
-			assertTrue(AvoidRoads.numWays(widths[i], lengths[i], bads.get(i)) == numWays[i]);
-		}
+	public void testSmallestPossibleCity() {
+		AvoidRoads ar = new AvoidRoads(1, 1, new String[] {});
+		assertEquals(ar.count(), 2L);
+	}
+
+	@Test
+	public void testBigCityWithNoBadBlocks() {
+		AvoidRoads ar = new AvoidRoads(35, 31, new String[] {});
+		assertEquals(ar.count(), 6406484391866534976L);
+	}
+
+	@Test
+	public void testPathsBlocked() {
+		AvoidRoads ar = new AvoidRoads(2, 2, new String[] {"0 0 1 0", "1 2 2 2", "1 1 2 1"});
+		assertEquals(ar.count(), 0L);
 	}
 
 }
