@@ -2,10 +2,10 @@ package problems;
 
 import java.util.LinkedList;
 
+
 /**
- * The description and specifications of the <i>Bad Neighbours</i> problem are outlined here:
- * 
- * http://community.topcoder.com/stat?c=problem_statement&pm=2402&rd=5009
+ * The description and specifications of the <i>Bad Neighbours</i> problem are outlined
+ * <a href="http://community.topcoder.com/stat?c=problem_statement&pm=2402&rd=5009">here</a>.
  * 
  * @author Hardik Vala
  */
