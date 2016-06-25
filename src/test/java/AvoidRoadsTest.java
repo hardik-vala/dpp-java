@@ -1,8 +1,7 @@
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 import problems.AvoidRoads;
-
-import org.junit.Test;
 
 
 public class AvoidRoadsTest {

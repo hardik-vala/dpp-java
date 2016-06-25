@@ -1,10 +1,9 @@
-import static org.junit.Assert.*;
-
 import java.math.BigInteger;
 
-import problems.FibonacciModified;
-
+import static org.junit.Assert.*;
 import org.junit.Test;
+
+import problems.FibonacciModified;
 
 
 public class FibonacciModifiedTest {

@@ -1,8 +1,7 @@
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 import problems.BadNeighbours;
-
-import org.junit.Test;
 
 
 public class BadNeighboursTest {
