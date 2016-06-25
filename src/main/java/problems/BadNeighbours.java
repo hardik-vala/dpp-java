@@ -11,83 +11,121 @@ import java.util.LinkedList;
  */
 public class BadNeighbours {
 	
-	/* Returns a linked list in order of those donations in a longest se*/
-	public static LinkedList<Integer> getMaximumDonations_DP (int[] d) {
-		LinkedList<Integer> maxDonationList = new LinkedList<Integer>();
-		if (d.length == 1) maxDonationList.add(d[0]);
+	/** Array of donations in order, where the donation at index i corresponds to the donation of
+	 * the (i + 1)th neighbour. */
+	int[] donations;
+
+	/** Sequence of donations yielding the maximum collectible amount. */
+	LinkedList<Integer> maxDonations;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param donations - Array of donations in order.
+	 */
+	public BadNeighbours(int[] donations) {
+		this.donations = donations;
+
+		this.maxDonations = new LinkedList<Integer>();
+	}
+
+	/**
+	 * Calculates the maximum amount of donations that can be collected.
+	 *
+	 * @return Max. amount of donations.
+	 */
+	public int calculate() {
+		int numDonations = this.donations.length;
+
+		if (numDonations == 1) this.maxDonations.add(this.donations[0]);
 		else {
-			if (d.length == 2) maxDonationList.add((d[0] < d[1]) ? d[1] : d[0]);
+			if (numDonations == 2)
+				this.maxDonations.add((this.donations[0] < this.donations[1]) ? this.donations[1] :
+					this.donations[0]);
 			else {
-				// 'WFN' stands for 'With First Neighbour'.
-				long[] maxDonationsWFN = new long[d.length - 1];
-				maxDonationsWFN[0] = d[0];
-				maxDonationsWFN[1] = d[1];
+				long[] maxDonationsWithFirstNeighbour = new long[numDonations - 1];
+				maxDonationsWithFirstNeighbour[0] = this.donations[0];
+				maxDonationsWithFirstNeighbour[1] = this.donations[1];
 				
-				int[] lastDonationWFN = new int[d.length - 1];
-				lastDonationWFN[1] = 1;
+				int[] lastDonationWithFirstNeighbour = new int[numDonations - 1];
+				lastDonationWithFirstNeighbour[1] = 1;
 				
-				long maxDonationWFN = d[0];
-				int maxDonationWFNIndex = 0;
-				if (d[1] > d[0]) {
-					maxDonationWFN = d[1];
-					maxDonationWFNIndex = 1;
+				long maxDonationWithFirstNeighbour = this.donations[0];
+				int maxDonationWithFirstNeighbourIndex = 0;
+				if (this.donations[1] > this.donations[0]) {
+					maxDonationWithFirstNeighbour = this.donations[1];
+					maxDonationWithFirstNeighbourIndex = 1;
 				}
 				
-				// 'WLN' stands for 'With Last Neighbour'.
-				long[] maxDonationsWLN = new long[d.length - 1];
-				maxDonationsWLN[d.length - 2] = d[d.length - 1];
-				maxDonationsWLN[d.length - 3] = d[d.length - 2];
+				long[] maxDonationsWithLastNeighbour = new long[numDonations - 1];
+				maxDonationsWithLastNeighbour[numDonations - 2] = this.donations[numDonations - 1];
+				maxDonationsWithLastNeighbour[numDonations - 3] = this.donations[numDonations - 2];
 				
-				int[] lastDonationWLN = new int[d.length - 1];
-				lastDonationWLN[d.length - 2] = d.length - 2;
-				lastDonationWLN[d.length - 3] = d.length - 3;
+				int[] lastDonationWithLastNeighbour = new int[numDonations - 1];
+				lastDonationWithLastNeighbour[numDonations - 2] = numDonations - 2;
+				lastDonationWithLastNeighbour[numDonations - 3] = numDonations - 3;
 				
-				long maxDonationWLN = d[d.length - 1];
-				int maxDonationWLNIndex = d.length - 2;
-				if (d[d.length - 2] < d[d.length - 1]) {
-					maxDonationWLN = d[d.length - 2];
-					maxDonationWLNIndex = d.length - 3;
+				long maxDonationWithLastNeighbour = this.donations[numDonations - 1];
+				int maxDonationWithLastNeighbourIndex = numDonations - 2;
+				if (this.donations[numDonations - 2] < this.donations[numDonations - 1]) {
+					maxDonationWithLastNeighbour = this.donations[numDonations - 2];
+					maxDonationWithLastNeighbourIndex = numDonations - 3;
 				}
 				
 				int i,j;
-				for (i = 2; i < (d.length - 1); i++) {
+				for (i = 2; i < (numDonations - 1); i++) {
 					for (j = i - 2; j >= 0; j--) {
-						if ((maxDonationsWFN[j] + d[i]) > maxDonationsWFN[i]) {
-							maxDonationsWFN[i] = maxDonationsWFN[j] + d[i];
-							lastDonationWFN[i] = j;
+						if ((maxDonationsWithFirstNeighbour[j] + this.donations[i]) >
+							maxDonationsWithFirstNeighbour[i]) {
+							maxDonationsWithFirstNeighbour[i] = maxDonationsWithFirstNeighbour[j] +
+								this.donations[i];
+							lastDonationWithFirstNeighbour[i] = j;
 						}
 						
-						if ((maxDonationsWLN[d.length - (j + 2)] + d[d.length - (i + 2) + 1]) > maxDonationsWLN[d.length - (i + 2)]) {
-							maxDonationsWLN[d.length - (i + 2)] = maxDonationsWLN[d.length - (j + 2)] + d[d.length - (i + 2) + 1];
-							lastDonationWLN[d.length - (i + 2)] = d.length - (j + 2);
+						if ((maxDonationsWithLastNeighbour[numDonations - (j + 2)] +
+							this.donations[numDonations - (i + 2) + 1]) >
+							maxDonationsWithLastNeighbour[numDonations - (i + 2)]) {
+							maxDonationsWithLastNeighbour[numDonations - (i + 2)] =
+								maxDonationsWithLastNeighbour[numDonations - (j + 2)] +
+								this.donations[numDonations - (i + 2) + 1];
+							lastDonationWithLastNeighbour[numDonations - (i + 2)] = numDonations -
+								(j + 2);
 						}
 					}
 					
-					if (maxDonationsWFN[i] > maxDonationWFN) {
-						maxDonationWFN = maxDonationsWFN[i];
-						maxDonationWFNIndex = i;
+					if (maxDonationsWithFirstNeighbour[i] > maxDonationWithFirstNeighbour) {
+						maxDonationWithFirstNeighbour = maxDonationsWithFirstNeighbour[i];
+						maxDonationWithFirstNeighbourIndex = i;
 					}
 					
-					if (maxDonationsWLN[d.length - (i + 2)] > maxDonationWLN) {
-						maxDonationWLN = maxDonationsWLN[d.length - (i + 2)];
-						maxDonationWLNIndex = d.length - (i + 2);
+					if (maxDonationsWithLastNeighbour[numDonations - (i + 2)] >
+						maxDonationWithLastNeighbour) {
+						maxDonationWithLastNeighbour = maxDonationsWithLastNeighbour[numDonations -
+							(i + 2)];
+						maxDonationWithLastNeighbourIndex = numDonations - (i + 2);
 					}
 				}
 				
-				if (maxDonationWFN < maxDonationWLN) {
-					for (i = maxDonationWLNIndex; lastDonationWLN[i] != i; i = lastDonationWLN[i]) {
-						maxDonationList.add(d[i + 1]);
+				if (maxDonationWithFirstNeighbour < maxDonationWithLastNeighbour) {
+					for (i = maxDonationWithLastNeighbourIndex; lastDonationWithLastNeighbour[i] !=
+						i; i = lastDonationWithLastNeighbour[i]) {
+						this.maxDonations.add(this.donations[i + 1]);
 					}
-					maxDonationList.add(d[i + 1]);
+					this.maxDonations.add(this.donations[i + 1]);
 				} else {
-					for (i = maxDonationWFNIndex; lastDonationWFN[i] != i; i = lastDonationWFN[i]) {
-						maxDonationList.addFirst(d[i]);
+					for (i = maxDonationWithFirstNeighbourIndex;
+						lastDonationWithFirstNeighbour[i] != i;
+						i = lastDonationWithFirstNeighbour[i]) {
+						this.maxDonations.addFirst(this.donations[i]);
 					}
-					maxDonationList.addFirst(d[i]);
+					this.maxDonations.addFirst(this.donations[i]);
 				}
 			}
 		}
 		
-		return maxDonationList;
+		int sum = 0;
+		for (int d: this.maxDonations) sum += d;
+
+		return sum;
 	}
 }
