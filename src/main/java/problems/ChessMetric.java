@@ -1,8 +1,7 @@
 package problems;
 
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
 
 
 /**
@@ -50,114 +49,108 @@ public class ChessMetric {
 	 * @return # of distinct ways.
 	 */
 	public long count() {
-		int numMoves = this.numMoves;
-
-		Queue<int[]> frontierCoords = new LinkedList<int[]>();
+		List<int[]> frontierCoords = new LinkedList<int[]>();
 		frontierCoords.add(this.start);
 		
-		int[] coord;
-		while (numMoves > 0) {
-			Iterator<int[]> it = frontierCoords.iterator();
-			
-			for (coord = it.next(); it.hasNext(); it.remove()) {
-				boolean canAccLeftCoord = coord[0] > 0;
-				boolean canAccBotCoord = coord[1] < (this.size - 1);
-				boolean canAccRightCoord = coord[0] < (this.size - 1);
-				boolean canAccTopCoord = coord[1] > 0;
+		for (int n = this.numMoves; n > 0; n--) {
+			List<int[]> newFrontierCoords = new LinkedList<int[]>();
+			for (int[] coord : frontierCoords) {
+				// System.out.println("(" + coord[0] + ", " + coord[1] + ")");
+
+				boolean canMoveLeft = coord[1] > 0;
+				boolean canMoveDown = coord[0] < (this.size - 1);
+				boolean canMoveRight = coord[1] < (this.size - 1);
+				boolean canMoveUp = coord[0] > 0;
 				
-				if (canAccLeftCoord) {
-					this.numWays[coord[0] - 1][coord[1]]++;
-					int[] coordToAdd = {coord[0] - 1, coord[1]};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccBotCoord) {
-					this.numWays[coord[0]][coord[1] + 1]++;
-					int[] coordToAdd = {coord[0], coord[1] + 1};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccRightCoord) {
-					this.numWays[coord[0] + 1][coord[1]]++;
-					int[] coordToAdd = {coord[0] + 1, coord[1]};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccTopCoord) {
+				if (canMoveLeft) {
 					this.numWays[coord[0]][coord[1] - 1]++;
-					int[] coordToAdd = {coord[0], coord[1] - 1};
-					frontierCoords.add(coordToAdd);
+					newFrontierCoords.add(new int[] {coord[0], coord[1] - 1});
+				}
+				if (canMoveDown) {
+					this.numWays[coord[0] + 1][coord[1]]++;
+					newFrontierCoords.add(new int[] {coord[0] + 1, coord[1]});
+				}
+				if (canMoveRight) {
+					this.numWays[coord[0]][coord[1] + 1]++;
+					newFrontierCoords.add(new int[] {coord[0], coord[1] + 1});
+				}
+				if (canMoveUp) {
+					this.numWays[coord[0] - 1][coord[1]]++;
+					newFrontierCoords.add(new int[] {coord[0] - 1, coord[1]});
 				}
 				
-				if (canAccLeftCoord && canAccBotCoord) {
-					this.numWays[coord[0] - 1][coord[1] + 1]++;
-					int[] coordToAdd = {coord[0] - 1, coord[1] + 1};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccBotCoord && canAccRightCoord) {
-					this.numWays[coord[0] + 1][coord[1] + 1]++;
-					int[] coordToAdd = {coord[0] + 1, coord[1] + 1};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccRightCoord && canAccTopCoord) {
+				// Can move one tile diagonally in the SW direction.
+				if (canMoveLeft && canMoveDown) {
 					this.numWays[coord[0] + 1][coord[1] - 1]++;
-					int[] coordToAdd = {coord[0] + 1, coord[1] - 1};
-					frontierCoords.add(coordToAdd);
+					newFrontierCoords.add(new int[] {coord[0] + 1, coord[1] - 1});
 				}
-				if (canAccTopCoord && canAccLeftCoord) {
+				// Can move one tile diagonally in the SE direction.
+				if (canMoveDown && canMoveRight) {
+					this.numWays[coord[0] + 1][coord[1] + 1]++;
+					newFrontierCoords.add(new int[] {coord[0] + 1, coord[1] + 1});
+				}
+				// Can move one tile diagonally in the NE direction.
+				if (canMoveRight && canMoveUp) {
+					this.numWays[coord[0] - 1][coord[1] + 1]++;
+					newFrontierCoords.add(new int[] {coord[0] - 1, coord[1] + 1});
+				}
+				// Can move one tile diagonally in the NW direction.
+				if (canMoveUp && canMoveLeft) {
 					this.numWays[coord[0] - 1][coord[1] - 1]++;
-					int[] coordToAdd = {coord[0] - 1, coord[1] - 1};
-					frontierCoords.add(coordToAdd);
+					newFrontierCoords.add(new int[] {coord[0] - 1, coord[1] - 1});
 				}
 				
-				boolean canAccLeftLeftCoord = coord[0] > 1;
-				boolean canAccBotBotCoord = coord[1] < (this.size - 2);
-				boolean canAccRightRightCoord = coord[0] < (this.size - 2);
-				boolean canAccTopTopCoord = coord[1] > 1;
+				boolean canMoveLeftLeft = coord[1] > 1;
+				boolean canMoveDownDown = coord[0] < (this.size - 2);
+				boolean canMoveRightRight = coord[1] < (this.size - 2);
+				boolean canMoveUpUp = coord[0] > 1;
 				
-				if (canAccLeftLeftCoord && canAccTopCoord) {
-					this.numWays[coord[0] - 2][coord[1] - 1]++;
-					int[] coordToAdd = {coord[0] - 2, coord[1] - 1};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccLeftCoord && canAccTopTopCoord) {
+				// Can move in an L-shape two tiles to the left and then one tile up.
+				if (canMoveLeftLeft && canMoveUp) {
 					this.numWays[coord[0] - 1][coord[1] - 2]++;
-					int[] coordToAdd = {coord[0] - 1, coord[1] - 2};
-					frontierCoords.add(coordToAdd);
+					newFrontierCoords.add(new int[] {coord[0] - 1, coord[1] - 2});
+				}
+				// Can move in an L-shape two tiles up and then one tile left.
+				if (canMoveLeft && canMoveUpUp) {
+					this.numWays[coord[0] - 2][coord[1] - 1]++;
+					newFrontierCoords.add(new int[] {coord[0] - 2, coord[1] - 1});
 				}
 				
-				if (canAccRightCoord && canAccTopTopCoord) {
-					this.numWays[coord[0] + 1][coord[1] - 2]++;
-					int[] coordToAdd = {coord[0] + 1, coord[1] - 2};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccRightRightCoord && canAccTopCoord) {
-					this.numWays[coord[0] + 2][coord[1] - 1]++;
-					int[] coordToAdd = {coord[0] + 2, coord[1] - 1};
-					frontierCoords.add(coordToAdd);
-				}
-				
-				if (canAccRightRightCoord && canAccBotCoord) {
-					this.numWays[coord[0] + 2][coord[1] + 1]++;
-					int[] coordToAdd = {coord[0] + 2, coord[1] + 1};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccRightCoord && canAccBotBotCoord) {
-					this.numWays[coord[0] + 1][coord[1] + 2]++;
-					int[] coordToAdd = {coord[0] + 1, coord[1] + 2};
-					frontierCoords.add(coordToAdd);
-				}
-				
-				if (canAccLeftCoord && canAccBotBotCoord) {
-					this.numWays[coord[0] - 1][coord[1] + 2]++;
-					int[] coordToAdd = {coord[0] - 1, coord[1] + 2};
-					frontierCoords.add(coordToAdd);
-				}
-				if (canAccLeftLeftCoord && canAccBotCoord) {
+				// Can move in an L-shape two tiles up and then one tile right.
+				if (canMoveRight && canMoveUpUp) {
 					this.numWays[coord[0] - 2][coord[1] + 1]++;
-					int[] coordToAdd = {coord[0] - 2, coord[1] + 1};
-					frontierCoords.add(coordToAdd);
+					newFrontierCoords.add(new int[] {coord[0] - 2, coord[1] + 1});
+				}
+				// Can move in an L-shape two tiles to the right and then one tile up.
+				if (canMoveRightRight && canMoveUp) {
+					this.numWays[coord[0] - 1][coord[1] + 2]++;
+					newFrontierCoords.add(new int[] {coord[0] - 1, coord[1] + 2});
+				}
+				
+				// Can move in an L-shape two tiles to the right and then one tile down.
+				if (canMoveRightRight && canMoveDown) {
+					this.numWays[coord[0] + 1][coord[1] + 2]++;
+					newFrontierCoords.add(new int[] {coord[0] + 1, coord[1] + 2});
+				}
+				// Can move in an L-shape two tiles down and then one tile right.
+				if (canMoveRight && canMoveDownDown) {
+					this.numWays[coord[0] + 2][coord[1] + 1]++;
+					newFrontierCoords.add(new int[] {coord[0] + 2, coord[1] + 1});
+				}
+				
+				// Can move in an L-shape two tiles down and then one tile left.
+				if (canMoveLeft && canMoveDownDown) {
+					this.numWays[coord[0] + 2][coord[1] - 1]++;
+					newFrontierCoords.add(new int[] {coord[0] + 2, coord[1] - 1});
+				}
+				// Can move in an L-shape two tiles to the left and then one tile down.
+				if (canMoveLeftLeft && canMoveDown) {
+					this.numWays[coord[0] + 1][coord[1] - 2]++;
+					newFrontierCoords.add(new int[] {coord[0] + 1, coord[1] - 2});
 				}
 			}
-			
-			numMoves--;
+
+			frontierCoords = newFrontierCoords;
 		}
 		
 		return this.numWays[this.end[0]][this.end[1]];
