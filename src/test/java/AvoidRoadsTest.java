@@ -12,6 +12,7 @@ public class AvoidRoadsTest {
 		assertEquals(252L, ar.count());
 	}
 
+	// Four blocks aranged in a square. Only 2 paths allowed.
 	@Test
 	public void testSmallestPossibleCity() {
 		AvoidRoads ar = new AvoidRoads(1, 1, new String[] {});
