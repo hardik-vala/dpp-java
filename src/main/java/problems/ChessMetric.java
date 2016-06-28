@@ -55,8 +55,6 @@ public class ChessMetric {
 		for (int n = this.numMoves; n > 0; n--) {
 			List<int[]> newFrontierCoords = new LinkedList<int[]>();
 			for (int[] coord : frontierCoords) {
-				// System.out.println("(" + coord[0] + ", " + coord[1] + ")");
-
 				boolean canMoveLeft = coord[1] > 0;
 				boolean canMoveDown = coord[0] < (this.size - 1);
 				boolean canMoveRight = coord[1] < (this.size - 1);
