@@ -6,6 +6,8 @@ import problems.BadNeighbours;
 
 public class BadNeighboursTest {
 	
+	// The maximum donation is 19, achieved by 10 + 2 + 7. It would be better to take 10+5+8 except
+	// that the 10 and 8 donations are from neighbors.
 	@Test
 	public void testRandomDonationsinModeratelySizedNeighbourhood() {
 		BadNeighbours bn = new BadNeighbours(new int[] {10, 3, 2, 5, 7, 8});
