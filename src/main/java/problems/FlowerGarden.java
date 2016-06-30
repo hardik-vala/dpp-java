@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
+
 /**
  * The description and specifications of the <i>Flower Garden</i> problem are outlined
  * <a href="http://community.topcoder.com/stat?c=problem_statement&pm=1918&rd=5006">here</a>.
