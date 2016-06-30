@@ -1,12 +1,7 @@
 package problems;
 
-import com.google.common.collect.ConcurrentHashMultiset;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -93,22 +88,22 @@ public class ChessMetric {
 	 * @return # of distinct ways.
 	 */
 	public long count() {
-		Multiset<Coordinate> frontierCoords = HashMultiset.<Coordinate>create();
-		frontierCoords.add(new Coordinate(this.start[1], this.start[0]));
+		Map<Coordinate, Long> frontierCoords = new HashMap<Coordinate, Long>();
+		frontierCoords.put(new Coordinate(this.start[1], this.start[0]), 1L);
 		
-		Multiset<Coordinate> newFrontierCoords;
+		Map<Coordinate, Long> newFrontierCoords;
 		Coordinate coord;
 		int x;
 		int y;
-		int count;
+		long count;
 		for (int n = this.numMoves; n > 0; n--) {
-			newFrontierCoords = HashMultiset.<Coordinate>create();
+			newFrontierCoords = new HashMap<Coordinate, Long>();
 
-			for (Multiset.Entry<Coordinate> e : frontierCoords.entrySet()) {
-				coord = e.getElement();
+			for (Map.Entry<Coordinate, Long> e : frontierCoords.entrySet()) {
+				coord = e.getKey();
 				x = coord.getX();
 				y = coord.getY();
-				count = e.getCount();
+				count = e.getValue();
 
 				boolean canMoveLeft = x > 0;
 				boolean canMoveDown = y < (this.size - 1);
@@ -116,41 +111,57 @@ public class ChessMetric {
 				boolean canMoveUp = y > 0;
 				
 				if (canMoveLeft) {
+					long oldCount = this.numWays[y][x - 1];
 					this.numWays[y][x - 1] += count;
-					newFrontierCoords.add(new Coordinate(x - 1, y), count);
+					Coordinate c = new Coordinate(x - 1, y);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				if (canMoveDown) {
+					long oldCount = this.numWays[y + 1][x];
 					this.numWays[y + 1][x] += count;
-					newFrontierCoords.add(new Coordinate(x, y + 1), count);
+					Coordinate c = new Coordinate(x, y + 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				if (canMoveRight) {
+					long oldCount = this.numWays[y][x + 1];
 					this.numWays[y][x + 1] += count;
-					newFrontierCoords.add(new Coordinate(x + 1, y), count);
+					Coordinate c = new Coordinate(x + 1, y);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				if (canMoveUp) {
+					long oldCount = this.numWays[y - 1][x];
 					this.numWays[y - 1][x] += count;
-					newFrontierCoords.add(new Coordinate(x, y - 1), count);
+					Coordinate c = new Coordinate(x, y - 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				
 				// Can move one tile diagonally in the SW direction.
 				if (canMoveLeft && canMoveDown) {
+					long oldCount = this.numWays[y + 1][x - 1];
 					this.numWays[y + 1][x - 1] += count;
-					newFrontierCoords.add(new Coordinate(x - 1, y + 1), count);
+					Coordinate c = new Coordinate(x - 1, y + 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move one tile diagonally in the SE direction.
 				if (canMoveDown && canMoveRight) {
+					long oldCount = this.numWays[y + 1][x + 1];
 					this.numWays[y + 1][x + 1] += count;
-					newFrontierCoords.add(new Coordinate(x + 1, y + 1), count);
+					Coordinate c = new Coordinate(x + 1, y + 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move one tile diagonally in the NE direction.
 				if (canMoveRight && canMoveUp) {
+					long oldCount = this.numWays[y - 1][x + 1];
 					this.numWays[y - 1][x + 1] += count;
-					newFrontierCoords.add(new Coordinate(x + 1, y - 1), count);
+					Coordinate c = new Coordinate(x + 1, y - 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move one tile diagonally in the NW direction.
 				if (canMoveUp && canMoveLeft) {
+					long oldCount = this.numWays[y - 1][x - 1];
 					this.numWays[y - 1][x - 1] += count;
-					newFrontierCoords.add(new Coordinate(x - 1, y - 1), count);
+					Coordinate c = new Coordinate(x - 1, y - 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				
 				boolean canMoveLeftLeft = x > 1;
@@ -160,46 +171,62 @@ public class ChessMetric {
 				
 				// Can move in an L-shape two tiles to the left and then one tile up.
 				if (canMoveLeftLeft && canMoveUp) {
+					long oldCount = this.numWays[y - 1][x - 2];
 					this.numWays[y - 1][x - 2] += count;
-					newFrontierCoords.add(new Coordinate(x - 2, y - 1), count);
+					Coordinate c = new Coordinate(x - 2, y - 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move in an L-shape two tiles up and then one tile left.
 				if (canMoveLeft && canMoveUpUp) {
+					long oldCount = this.numWays[y - 2][x - 1];
 					this.numWays[y - 2][x - 1] += count;
-					newFrontierCoords.add(new Coordinate(x - 1, y - 2), count);
+					Coordinate c = new Coordinate(x - 1, y - 2);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				
 				// Can move in an L-shape two tiles up and then one tile right.
 				if (canMoveRight && canMoveUpUp) {
+					long oldCount = this.numWays[y - 2][x + 1];
 					this.numWays[y - 2][x + 1] += count;
-					newFrontierCoords.add(new Coordinate(x + 1, y - 2), count);
+					Coordinate c = new Coordinate(x + 1, y - 2);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move in an L-shape two tiles to the right and then one tile up.
 				if (canMoveRightRight && canMoveUp) {
+					long oldCount = this.numWays[y - 1][x + 2];
 					this.numWays[y - 1][x + 2] += count;
-					newFrontierCoords.add(new Coordinate(x + 2, y - 1), count);
+					Coordinate c = new Coordinate(x + 2, y - 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				
 				// Can move in an L-shape two tiles to the right and then one tile down.
 				if (canMoveRightRight && canMoveDown) {
+					long oldCount = this.numWays[y + 1][x + 2];
 					this.numWays[y + 1][x + 2] += count;
-					newFrontierCoords.add(new Coordinate(x + 2, y + 1), count);
+					Coordinate c = new Coordinate(x + 2, y + 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move in an L-shape two tiles down and then one tile right.
 				if (canMoveRight && canMoveDownDown) {
+					long oldCount = this.numWays[y + 2][x + 1];
 					this.numWays[y + 2][x + 1] += count;
-					newFrontierCoords.add(new Coordinate(x + 1, y + 2), count);
+					Coordinate c = new Coordinate(x + 1, y + 2);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				
 				// Can move in an L-shape two tiles down and then one tile left.
 				if (canMoveLeft && canMoveDownDown) {
+					long oldCount = this.numWays[y + 2][x - 1];
 					this.numWays[y + 2][x - 1] += count;
-					newFrontierCoords.add(new Coordinate(x - 1, y + 2), count);
+					Coordinate c = new Coordinate(x - 1, y + 2);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 				// Can move in an L-shape two tiles to the left and then one tile down.
 				if (canMoveLeftLeft && canMoveDown) {
+					long oldCount = this.numWays[y + 1][x - 2];
 					this.numWays[y + 1][x - 2] += count;
-					newFrontierCoords.add(new Coordinate(x - 2, y + 1), count);
+					Coordinate c = new Coordinate(x - 2, y + 1);
+					newFrontierCoords.put(c, oldCount + count);
 				}
 			}
 
