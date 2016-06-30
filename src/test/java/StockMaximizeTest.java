@@ -1,8 +1,7 @@
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 import problems.StockMaximize;
-
-import org.junit.Test;
 
 
 public class StockMaximizeTest {
@@ -14,37 +13,37 @@ public class StockMaximizeTest {
 	@Test
 	public void testMonotonicallyDecreasingPricesForDPSol() {
 		StockMaximize sm = new StockMaximize(this.monotonicallyDecreasingPrices);
-		assertEquals(sm.calculateDP(), 0);
+		assertEquals(0, sm.calculateDP());
 	}
 
 	@Test
 	public void testMonotonicallyDecreasingPricesForNonDPSol() {
 		StockMaximize sm = new StockMaximize(this.monotonicallyDecreasingPrices);
-		assertEquals(sm.calculateNonDP(), 0);
+		assertEquals(0, sm.calculateNonDP());
 	}
 
 	@Test
 	public void testMonotonicallyIncreasingPricesForDPSol() {
 		StockMaximize sm = new StockMaximize(this.monotonicallyIncreasingPrices);
-		assertEquals(sm.calculateDP(), 197);
+		assertEquals(197, sm.calculateDP());
 	}
 
 	@Test
 	public void testMonotonicallyIncreasingPricesForNonDPSol() {
 		StockMaximize sm = new StockMaximize(this.monotonicallyIncreasingPrices);
-		assertEquals(sm.calculateNonDP(), 197);
+		assertEquals(197, sm.calculateNonDP());
 	}
 
 	@Test
 	public void testOscillatingPricesForDPSol() {
 		StockMaximize sm = new StockMaximize(this.oscillatingPrices);
-		assertEquals(sm.calculateDP(), 3);
+		assertEquals(3, sm.calculateDP());
 	}
 
 	@Test
 	public void testOscillatingPricesForNonDPSol() {
 		StockMaximize sm = new StockMaximize(this.oscillatingPrices);
-		assertEquals(sm.calculateNonDP(), 3);
+		assertEquals(3, sm.calculateNonDP());
 	}
 
 }
