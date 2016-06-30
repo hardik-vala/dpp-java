@@ -34,10 +34,10 @@ public class ChessMetricTest {
 		assertEquals(5, cm.count());
 	}
 
-	// @Test
-	// public void testBigBoard() {
-	// 	ChessMetric cm = new ChessMetric(100, new int[] {0, 0}, new int[] {0, 99}, 50);
-	// 	assertEquals(243097320072600L, cm.count());
-	// }
+	@Test
+	public void testBigBoard() {
+		ChessMetric cm = new ChessMetric(100, new int[] {0, 0}, new int[] {0, 99}, 50);
+		assertEquals(243097320072600L, cm.count());
+	}
 
 }
