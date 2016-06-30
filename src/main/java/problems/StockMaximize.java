@@ -2,9 +2,8 @@ package problems;
 
 
 /**
- * The description and specifications of the <i>Stock Maximize</i> problem are provided here:
- * 
- * https://www.hackerrank.com/challenges/stockmax
+ * The description and specifications of the <i>Stock Maximize</i> problem are outlined
+ * <a href="https://www.hackerrank.com/challenges/stockmax">here</a>.
  * 
  * @author Hardik Vala
  */

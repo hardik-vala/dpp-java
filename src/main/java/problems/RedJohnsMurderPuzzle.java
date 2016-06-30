@@ -2,10 +2,8 @@ package problems;
 
 
 /**
- * The description and specifications of the <i>Red John's Murder Puzzle</i> problem are provided
- * here:
- * 
- * https://www.hackerrank.com/challenges/red-john-is-back
+ * The description and specifications of the <i>Red John's Murder Puzzle</i> problem are outlined
+ * <a href="https://www.hackerrank.com/challenges/red-john-is-back">here</a>.
  * 
  * @author Hardik Vala
  */
