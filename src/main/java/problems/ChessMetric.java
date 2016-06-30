@@ -47,6 +47,7 @@ public class ChessMetric {
 		this.numWays = new long[size][size];
 	}
 
+	// Convenience class for storing a coordinate on the chess board.
 	private static class Coordinate {
 
 		private int[] coordinates;
