@@ -4,9 +4,9 @@ import java.util.List;
 
 
 /**
- * The <a href="http://www.programcreek.com/2014/06/leetcode-decode-ways-java/"><i>Decode Ways</i><a>
- * problem.
- *
+ * The description and specifications of the <i>Decode Ways</i> problem are outlined
+ * <a href="http://www.programcreek.com/2014/06/leetcode-decode-ways-java">here</a>.
+ * 
  * @author Hardik Vala
  */
 public class DecodeWays {
@@ -19,8 +19,8 @@ public class DecodeWays {
 	/**
 	 * Constructor.
 	 *
-	 * @param message - Input message, as a sequence of digits
-	 * @precondition Message elements are digits
+	 * @param message - Input message, as a sequence of digits.
+	 * @precondition Message elements are digits.
 	 */
 	public DecodeWays(List<Short> message) {
 		this.message = message;
@@ -29,7 +29,7 @@ public class DecodeWays {
 	/**
 	 * Counts all ways of decoding the input message.
 	 *
-	 * @return Number of ways of decoding the input message
+	 * @return # of such ways.
 	 */
 	public int count() {
 		// Size of the message (i.e. number of digits).
@@ -38,9 +38,7 @@ public class DecodeWays {
 		// If the message is empty, then there are 0 ways to decode it.
 		if (size == 0) return 0;
 
-		// Initialize the counts array with a count corresponding to each digit in the message.
 		this.counts = new int[size];
-
 		// There is only one way of decoding the first digit of the message.
 		this.counts[0] = 1;
 
@@ -61,7 +59,6 @@ public class DecodeWays {
 				this.counts[i] = this.counts[i - 1];
 		}
 
-		// The desired count is stored in the last element of the count array.
 		return this.counts[size - 1];
 	}
 
