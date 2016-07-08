@@ -32,6 +32,8 @@ public class BalancedParentheses {
 	 * @param N - # of pairs of parentheses.
 	 */
 	public BalancedParentheses(int N) {
+		if (N < 0) throw new IllegalArgumentException("N must be nonnegative");
+
 		this.N = N;
 
 		this.counts = new long[N + 1];
