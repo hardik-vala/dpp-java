@@ -30,7 +30,7 @@ public class PalindromeSubsequences<T> {
 	/**
 	 * Constructor.
 	 *
-	 * @param seq - Input sequence
+	 * @param seq - Input sequence.
 	 */
 	public PalindromeSubsequences(List<T> seq) {
 		this.seq = seq;
@@ -39,7 +39,7 @@ public class PalindromeSubsequences<T> {
 	/**
 	 * Counts all subsequences of the input sequence that are palindrome.
 	 *
-	 * @return Number of subsequences that are palindrome
+	 * @return # of subsequences that are palindrome.
 	 */
 	public int count() {
 		// Number of elements in input sequence.
