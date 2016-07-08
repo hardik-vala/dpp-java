@@ -17,7 +17,7 @@ import java.util.List;
  * 
  * @author Hardik
  */
-public class BalancedParantheses {
+public class BalancedParentheses {
 	
 	/** # of pairs of parentheses. */
 	private int N;
@@ -31,7 +31,7 @@ public class BalancedParantheses {
 	 *
 	 * @param N - # of pairs of parentheses.
 	 */
-	public BalancedParantheses(int N) {
+	public BalancedParentheses(int N) {
 		this.N = N;
 
 		this.counts = new long[N + 1];
