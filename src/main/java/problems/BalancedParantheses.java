@@ -2,92 +2,90 @@ package problems;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
+
+/**
+ * Counts the number of sequences of balanced parentheses of a given size. For example, with 3 pairs
+ * of parentheses, 4 distinct sequences can be formed for which the parentheses are balanced. These
+ * are,
+ *
+ * ((()))
+ * ()(())
+ * ()()()
+ * (())()
+ * 
+ * @author Hardik
+ */
 public class BalancedParantheses {
+	
+	/** # of pairs of parentheses. */
+	private int N;
 
-	private static final String EMPTY_PARAN = "";
-	private static final char RIGHT_PARAN = '(';
-	private static final char LEFT_PARAN = ')';
+	/** Index i stores the # of sequences of balanced parentheses that can be formed with i pairs of
+	  * parentheses. */
+	private long[] counts;
 	
-	private static final int N = 5;
-	
-	private static final boolean DISPLAY_PARANS = false;
-	
-	public static void main(String[] args) {
-		
-		if (DISPLAY_PARANS) {
-			LinkedList<String> balParans = getBalancedParantheses_DP(N);
-			long numBalParans = (N == 0) ? 0 : balParans.size();
-			
-			System.out.println("Balanced Parantheses of size " + N + " (" + numBalParans + "):\n");
-			
-			int i = 1;
-			for (String p : balParans) {
-				System.out.print(p);
-				if (i < numBalParans) System.out.print(", ");
-				i++;
-			}
-		} else {
-			System.out.print("Number of balanced parantheses of size " + N + ": " + getNumBalancedParantheses_DP(N));
-		}
-	}
+	/**
+	 * Constructor.
+	 *
+	 * @param N - # of pairs of parentheses.
+	 */
+	public BalancedParantheses(int N) {
+		this.N = N;
 
-	private static long getNumBalancedParantheses_DP (int n) {
-		if (n == 0) return 0;
-		
-		long[] numBalParans = new long[n + 1];
-		numBalParans[0] = 1;
-		numBalParans[1] = 1;
-		
-		for (int i = 2; i <= n ; i++) {
-			for (int j = 0; j <= (i - 1); j++) {
-				numBalParans[i] += numBalParans[j] * numBalParans[i - 1 - j];
-			}
-		}
-		
-		return numBalParans[n];
-	}
-		
-	private static LinkedList<String> getBalancedParantheses_DP (int n) {
-		ArrayList<LinkedList<String>> balParans = new ArrayList<LinkedList<String>>(n + 1);
-		
-		LinkedList<String> emptyParanList = new LinkedList<String>();
-		emptyParanList.add(EMPTY_PARAN);
-		balParans.add(0, emptyParanList);
-		
-		for (int i = 1; i <= n; i++) {
-			LinkedList<String> balParanForSize = new LinkedList<String>();
-			
-			for (int j = 0; j <= (i - 1); j++) {
-				for (String p1 : balParans.get(j)) {
-					for (String p2 : balParans.get(i - 1 - j)) {
-						balParanForSize.add(RIGHT_PARAN + p1 + LEFT_PARAN + p2);
-					}
-				}
-			}
-			
-			balParans.add(i, balParanForSize);
-		}
-		
-		return balParans.get(n);
+		this.counts = new long[N + 1];
 	}
 	
-	private static LinkedList<String> getBalancedParantheses_Rec (int n) {
-		LinkedList<String> balParans = new LinkedList<String>();
+	/**
+	 * Counts all sequences formed from balanced parentheses.
+	 *
+	 * @return # of sucb sequences.
+	 */
+	public long count() {
+		if (this.N <= 1) return 1;
 		
-		if (n == 0) {
-			balParans.add(EMPTY_PARAN);
-			return balParans;
+		this.counts[0] = 1;
+		
+		for (int i = 1; i <= this.N; i++) {
+			this.counts[i] = 1;
+			for (int j = 1; j < i; j++)
+				this.counts[i] += this.counts[j];
 		}
 		
-		for (int i = 0; i <= (n - 1); i++) {
-			for (String p1 : getBalancedParantheses_Rec(i)) {
-				for (String p2 : getBalancedParantheses_Rec(n - 1 - i)) {
-					balParans.add(RIGHT_PARAN + p1 + LEFT_PARAN + p2);
-				}
+		return this.counts[this.N];
+	}
+	
+	/**
+	 * Returns a list of all sequences formed from balanced parentheses.
+	 *
+	 * @return List of such sequences.
+	 */
+	public List<String> get() {
+		ArrayList<LinkedList<String>> seqsList = new ArrayList<LinkedList<String>>(this.N + 1);
+		
+		for (int i = 0; i <= this.N; i++) {
+			LinkedList<String> seqs = new LinkedList<String>();
+
+			String firstSeq = "";
+			for (int j = 0; j < i; j++)
+				firstSeq = "(" + firstSeq + ")";
+
+			seqs.add(firstSeq);
+			seqsList.add(seqs);
+		}
+		
+		for (int i = 1; i <= this.N; i++) {
+			LinkedList<String> seqs = seqsList.get(i);
+			for (int j = 1; j < i; j++) {
+				String prefix = seqsList.get(i - j).get(0);
+
+				for (String seq : seqsList.get(j))
+					seqs.add(prefix + seq);
 			}
 		}
 		
-		return balParans;
+		return seqsList.get(this.N);
 	}
+	
 }
