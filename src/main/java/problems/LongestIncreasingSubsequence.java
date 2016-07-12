@@ -2,7 +2,7 @@ package problems;
 
 
 /**
- * The description and specifications of the <i>Longest Increasing Subsequences</i> problem are
+ * The description and specifications of the <i>Longest Increasing Subsequence</i> problem are
  * outlined <a href="http://people.csail.mit.edu/bdean/6.046/dp/">here</a>.
  * 
  * @author Hardik Vala
@@ -30,7 +30,7 @@ public class LongestIncreasingSubsequence {
 	/**
 	 * Calculates the length of the longest increasing subsequence.
 	 *
-	 * @return Length of longest increasining subsequence.
+	 * @return Length of longest increasing subsequence.
 	 */
 	public int calculate() {
 		this.lengths[0] = 1; 
