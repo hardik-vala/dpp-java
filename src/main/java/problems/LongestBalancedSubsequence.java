@@ -30,7 +30,7 @@ public class LongestBalancedSubsequence {
 
 	/**
 	 * Calculates the length of the longest balanced subsequence using DP, resulting in an O(N**2)
-	 * solution, where N is the length of the sequence, w.r.t. both time and space
+	 * solution, where N is the length of the sequence, w.r.t. both time and space.
 	 *
 	 * @return Length of longest balanced subsequence.
 	 */
