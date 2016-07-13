@@ -38,23 +38,24 @@ public class LongestBalancedSubsequence {
 		int seqLen = this.seq.length();
 		for (int l = 1; l < seqLen; l++) {
 			for (int i = 0; i < seqLen - l; i++) {
+				int j = i + l;
 				// Ends are balanced.
-				if (this.seq.charAt(i) == '(' && this.seq.charAt(i + l) == ')') {
+				if (this.seq.charAt(i) == '(' && this.seq.charAt(j) == ')') {
 					// lengths[i, j] = max(lengths[i + 1, j - 1] + 2, lengths[i + 1, j] + 
-					// lengths[i, j - 1] - lengths[i + 1, j - 1]), where j = i + l.
-					if (this.lengths[i + 1][i + l - 1] + 2 > this.lengths[i + 1][i + l] +
-						this.lengths[i][i + l - 1] - this.lengths[i + 1][i + l - 1])
-						this.lengths[i][i + l] = this.lengths[i + 1][i + l - 1] + 2;
+					// lengths[i, j - 1] - lengths[i + 1, j - 1])
+					if (this.lengths[i + 1][j - 1] + 2 > this.lengths[i + 1][j] +
+						this.lengths[i][j - 1] - this.lengths[i + 1][j - 1])
+						this.lengths[i][j] = this.lengths[i + 1][j - 1] + 2;
 					else
-						this.lengths[i][i + l] = this.lengths[i + 1][i + l] +
-							this.lengths[i][i + l - 1] - this.lengths[i + 1][i + l - 1];
+						this.lengths[i][j] = this.lengths[i + 1][j] +
+							this.lengths[i][j - 1] - this.lengths[i + 1][j - 1];
 				// Ends are not balanced.
 				} else {
-					// lengths[i, j] = max(lengths[i + 1, j], lengths[i, j - 1]), where j = i + l.
-					if (this.lengths[i + 1][i + l] > this.lengths[i][i + l - 1])
-						this.lengths[i][i + l] = this.lengths[i + 1][i + l];
+					// lengths[i, j] = max(lengths[i + 1, j], lengths[i, j - 1])
+					if (this.lengths[i + 1][j] > this.lengths[i][j - 1])
+						this.lengths[i][j] = this.lengths[i + 1][j];
 					else
-						this.lengths[i][i + l] = this.lengths[i][i + l - 1];
+						this.lengths[i][j] = this.lengths[i][j - 1];
 				}
 			}
 		}
