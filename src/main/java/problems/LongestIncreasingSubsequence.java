@@ -13,7 +13,7 @@ public class LongestIncreasingSubsequence {
 	int[] seq;
 
 	/** Index i stores the length of the longest increasing subsequence up to the ith element in the
-	  * sequence (not necessarily including the ith element). */
+	 * sequence (not necessarily including the ith element). */
 	int[] lengths;
 
 	/**
