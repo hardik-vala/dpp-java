@@ -3,58 +3,81 @@ package problems;
 import java.util.HashSet;
 
 /**
- * The description and specifications of the <i>Minimum Change</i> problem are outlined here:
- * 
- * http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=dynProg
- * 
- * in the <i>Introduction</i> section.
+ * The description and specifications of the <i>Minimum Change</i> problem are
+ * outlined <a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=dynProg">here</a>,
+ * in the <i>Introduction</i>.
  * 
  * @author Hardik Vala
  */
 public class MinimumChange {
 
-	// Must be non-negative.
-	private static final int SUM = 20;
-	// Must be positive and distinct.
-	private static final int[] COINS = {1, 3, 5};
-	
-	// Testing
-	public static void main(String[] args) {
-		System.out.println("Sum\t|\tMin. Coins");
-		System.out.println("________|_________________");
-		
-		for (int i = 0; i <= SUM; i++) {
-			System.out.println(i + "\t|\t" + getMinChange_AltDP(i, COINS));
-		}
+	/** Desired sum. */
+	private int sum;
+	/** List of coin values. */
+	private int[] coins;
+
+	/** Index i stores the minimum # coins that sum to i. */
+	private int[] minCounts;
+
+
+	/**
+	 * Constructor.
+	 *
+	 * @param sum - Desired sum.
+	 * @param coins - List of coin values.
+	 * @precondition sum >= 0.
+	 * @precondition coins[i] >= 0 for all i.
+	 */
+	public MinimumChange(int sum, int[] coins) {
+		this.sum = sum;
+		this.coins = coins;
+
+		this.minCounts = new int[sum + 1];
 	}
-	
-	/* Implements the alternative dynamic programming solution described in the final
-	 * paragraph of the Introducton section of Topcoder page listed above. */
-	private static int getMinChange_AltDP (int s, int[] coins) {
-		int[] minChange = new int[s + 1];
-		minChange[0] = 0;
-		for (int i = 1; i <= s; i++) minChange[i] = Integer.MAX_VALUE;
-		
-		HashSet<Integer> indicesWithSol = new HashSet<Integer>();
-		indicesWithSol.add(0);
-		
-		while (indicesWithSol.size() < (s + 1)) {
-			HashSet<Integer> indicesToAdd = new HashSet<Integer>();
-			
-			for (Integer i : indicesWithSol) {
-				for (int j = 0; j < coins.length; j++) {
-					if ((i + coins[j] <= s) &&
-						(minChange[i] + 1 < minChange[i + coins[j]])) {
-						minChange[i + coins[j]] = minChange[i] + 1;
-						indicesToAdd.add(i + coins[j]);
-					}
-				}
+
+	/**
+	 * Calculates the minimum # coins summing to the desired sum. (Loops over each possible sum less
+	 * than the desired one, and for each possible sum, loops over the coins one-by-one.)
+	 *
+	 * @return Minimum # coins summing to the desired sum.
+	 */
+	public int calculate1() {
+		for (int i = 1; i <= this.sum; i++)
+			this.minCounts[i] = Integer.MAX_VALUE;
+
+		for (int i = 1; i <= this.sum; i++) {
+			for (int j = 0; j < this.coins.length; j++) {
+				int coin = this.coins[j];
+				if (coin <= i &&
+					this.minCounts[i - coin] + 1 >= 0 &&
+					this.minCounts[i - coin] + 1 < this.minCounts[i])
+					this.minCounts[i] = this.minCounts[i - coin] + 1;
 			}
-			
-			indicesWithSol.addAll(indicesToAdd);
 		}
-		
-		return minChange[s];
+
+		return this.minCounts[this.sum];
+	}
+
+	/**
+	 * Same as {@link #calculate1() calculate1}, but loops over the coins, and for each coin, loops
+	 * over each possible sum less than the desired one.
+	 *
+	 * @return Minimum # coins summing to the desired sum.
+	 */
+	public int calculate2() {
+		for (int i = 1; i <= this.sum; i++)
+			this.minCounts[i] = Integer.MAX_VALUE;
+
+		for (int i = 0; i < this.coins.length; i++) {
+			int coin = this.coins[i];
+			for (int j = coin; j <= this.sum; j++) {
+				if (this.minCounts[j - coin] + 1 >= 0 &&
+					this.minCounts[j - coin] + 1 < this.minCounts[j])
+					this.minCounts[j] = this.minCounts[j - coin] + 1;
+			}
+		}
+
+		return this.minCounts[this.sum];
 	}
 
 }
