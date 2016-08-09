@@ -2,6 +2,10 @@
 
 A collection of solutions to dynamic programming problems written in Java, cuz why not? DP problems are fun.
 
+## Requirements
+
+* Java 8+
+
 ## Problems
 
 * [Avoid Roads](http://community.topcoder.com/stat?c=problem_statement&pm=1889&rd=4709)
