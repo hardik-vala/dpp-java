@@ -32,29 +32,33 @@ public class JewelryTest {
 	// Note that each '5' is a different piece of jewelry and needs to be accounted for separately.
 	// There are 9 legal ways of allocating the jewelry to Bob and Frank given the policy.
 	@Test
-	public void testSmallJewlerySetWithDup() {
+	public void testSmallJewlerySetWithEndingDup() {
 		Jewelry j = new Jewelry(new int[] {1, 2, 5, 3, 4, 5});
 		assertEquals(9L, j.count());
 	}
 
 	@Test
-	public void testBiggerJewlerySetWithDups() {
-		Jewelry j = new Jewelry(new int[] {7, 7, 8, 9, 10, 11, 1, 2, 2, 3, 4, 5, 6});
-		assertEquals(607L, j.count());
+	public void testSmallJewelryWithEndingTripleDup() {
+		Jewelry j = new Jewelry(new int[] {2, 1, 2, 2});
+		assertEquals(6L, j.count());
 	}
 
 	@Test
-	public void testBiggerJewlerySetWithAllDups() {
-		int[] jewelry = new int[] {
-			1000, 1000, 1000, 1000, 1000,
-			1000, 1000, 1000, 1000, 1000,
-			1000, 1000, 1000, 1000, 1000,
-			1000, 1000, 1000, 1000, 1000,
-			1000, 1000, 1000, 1000, 1000,
-			1000, 1000, 1000, 1000, 1000
-		};
-		Jewelry j = new Jewelry(jewelry);
-		assertEquals(18252025766940L, j.count());
+	public void testSmallJewlerySetWithMiddleDup() {
+		Jewelry j = new Jewelry(new int[] {1, 2, 2, 3});
+		assertEquals(4L, j.count());
+	}
+
+	@Test
+	public void testSmallJewlerySetWithMultiDups() {
+		Jewelry j = new Jewelry(new int[] {1, 2, 2, 3, 4, 4, 5, 6});
+		assertEquals(33L, j.count());
+	}
+
+	@Test
+	public void testSmallJewlerySetWithAllDups() {
+		Jewelry j = new Jewelry(new int[] {1, 1, 1, 1, 1});
+		assertEquals(25L, j.count());
 	}
 
 	@Test

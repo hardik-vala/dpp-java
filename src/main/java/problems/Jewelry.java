@@ -14,12 +14,6 @@ public class Jewelry {
 	/** Value of each piece of jewelry. */
 	int[] jewelry;
 
-	/** Index i stores the # of ways of allocating Bob or Frank's jewelry, respectively, to sum to
-	 * i. */
-	// long[] numBobsWays;
-	// long[] numFranksWays;
-
-
 	/**
 	 * Constructor.
 	 *
@@ -30,24 +24,33 @@ public class Jewelry {
 			throw new IllegalArgumentException("Must have at least 2 pieces of jewelry.");
 
 		this.jewelry = jewelry;
-
-		// int sum = 0;
-		// for (int i = 0; i < jewelry.length; i++) sum += jewelry[i];
-
-		// this.numBobsWays = new long[sum + 1];
-		// this.numFranksWays = new long[sum + 1];
 	}
 
+	/**
+	 * Counts the # of different ways you can allocate the jewelry to Bob and Frank following the
+	 * policy.
+	 *
+	 * @return # of different allocations.
+	 */
 	public long count() {
 		int[] sortedJewelry = Arrays.copyOf(this.jewelry, this.jewelry.length);
 		Arrays.sort(sortedJewelry);
 		int numJewelry = sortedJewelry.length;
 		int sum = Arrays.stream(sortedJewelry).sum();
 
+		// Index i stores the number of duplicate prices ahead of the jewelry piece at index i in
+		// the sorted order of prices.
+		int[] numDupsAhead = new int[numJewelry];
+		for (int i = numJewelry - 2; i >= 0; i--) {
+			if (sortedJewelry[i] == sortedJewelry[i + 1])
+				numDupsAhead[i] = numDupsAhead[i + 1] + 1;
+		}
+
 		long[] accNumBobsWays = new long[sum + 1];
 		accNumBobsWays[0] = 1;
 
 		long numWays = 0L;
+		int sameJewelryCount = 1;
 		for (int i = 0; i < numJewelry - 1; i++) {
 			long[] newNumBobsWays = new long[sum + 1];
 			for (int k = sum; k >= sortedJewelry[i]; k--)
@@ -60,17 +63,13 @@ public class Jewelry {
 					numFranksWays[k] += numFranksWays[k - sortedJewelry[j]];
 			}
 
-			// System.out.println(i);
-			// System.out.println(Arrays.toString(accNumBobsWays));
-			// System.out.println(Arrays.toString(newNumBobsWays));
-			// System.out.println(Arrays.toString(numFranksWays));
-
 			for (int k = 1; k <= sum; k++) {
 				numWays += newNumBobsWays[k] * numFranksWays[k];
 				accNumBobsWays[k] += newNumBobsWays[k];
 			}
 
-			// System.out.println(numWays);
+			if (sortedJewelry[i] == sortedJewelry[i + 1])
+				numWays += numDupsAhead[i];
 		}
 
 		return numWays;
