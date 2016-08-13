@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 /**
- * Determines the # sub-arrays (not necessarily contiguous) of an array of integers that sum to S.
+ * Determines the # subarrays (not necessarily contiguous) of an array of integers that sum to S.
  *
  * @author Hardik
  */
@@ -31,6 +31,7 @@ public class SubarraySum {
 		this.numSubarrays = new HashMap<Integer, Integer>();
 	}
 
+	// Determine the max. sum of any subarray (not necessarily contiguous) of the given array.
 	private static int detMaxSubarraySum(int[] array) {
 		assert array.length > 0;
 
@@ -52,6 +53,7 @@ public class SubarraySum {
 		return min;
 	}
 
+	// Determine the min. sum of any subarray (not necessarily contiguous) of the given array.
 	private static int detMinSubarraySum(int[] array) {
 		assert array.length > 0;
 
@@ -71,6 +73,40 @@ public class SubarraySum {
 			if (array[i] > max) max = array[i];
 
 		return max;
+	}
+
+	/**
+	 * Counts the # of subarrays with sum S.
+	 *
+	 * @return # of such subarrays.
+	 */
+	public int count() {
+		int maxSum = detMaxSubarraySum(this.array);
+		int minSum = detMinSubarraySum(this.array);
+
+		for (int sum = minSum; sum <= maxSum; sum++)
+			this.numSubarrays.put(sum, 0);
+
+		for (int i = 0; i < this.array.length; i++) {
+			int n = this.array[i];
+
+			int lastSum = minSum + ((n >= 0) ? n : 0);
+			if (n >= 0) {
+				for (int sum = maxSum; sum >= minSum + n; sum--) {
+					int numSubarraysforSum = this.numSubarrays.get(sum);
+					this.numSubarrays.put(sum, numSubarraysforSum + this.numSubarrays.get(sum - n));
+				}
+			} else {
+				for (int sum = minSum; sum <= maxSum + n; sum++) {
+					int numSubarraysforSum = this.numSubarrays.get(sum);
+					this.numSubarrays.put(sum, numSubarraysforSum + this.numSubarrays.get(sum - n));
+				}
+			}
+
+			this.numSubarrays.put(n, this.numSubarrays.get(n) + 1);
+		}
+
+		return this.numSubarrays.get(this.S);
 	}
 
 }
