@@ -26,3 +26,4 @@ A collection of solutions to dynamic programming problems written in Java, cuz w
 * Palindrome Subsequences
 * [Red John's Murder Puzzle](https://www.hackerrank.com/challenges/red-john-is-back)
 * [Stock Maximize](https://www.hackerrank.com/challenges/stockmax)
+* Subarray Sum
