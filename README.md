@@ -5,6 +5,11 @@ A collection of solutions to dynamic programming problems written in Java, cuz w
 ## Requirements
 
 * Java 8+
+* [sbt](http://www.scala-sbt.org/) (optional)
+
+## Compile and Test
+
+The project uses [sbt](http://www.scala-sbt.org/) so a simple `sbt clean compile test` on the command-line in the project folder will compile the source and run the unit tests. (For the usage of a solution to a particular problem, you can check out the problem's test file.)
 
 ## Problems
 
