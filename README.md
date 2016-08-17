@@ -32,3 +32,4 @@ The project uses [sbt](http://www.scala-sbt.org/) so a simple `sbt clean compile
 * [Red John's Murder Puzzle](https://www.hackerrank.com/challenges/red-john-is-back)
 * [Stock Maximize](https://www.hackerrank.com/challenges/stockmax)
 * Subarray Sum
+* [Unbounded Knapsack](https://xlinux.nist.gov/dads/HTML/unboundedKnapsack.html)
