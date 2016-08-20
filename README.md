@@ -9,7 +9,7 @@ A collection of solutions to dynamic programming problems written in Java, cuz w
 
 ## Compile and Test
 
-The project uses [sbt](http://www.scala-sbt.org/) so a simple `sbt clean compile test` on the command-line in the project folder will compile the source and run the unit tests. (For the usage of a solution to a particular problem, you can check out the problem's test file.)
+The project uses [sbt](http://www.scala-sbt.org/) so a simple `sbt clean compile test` on the command-line in the project folder will compile the source and run the unit tests. (For the usage of a solution to a particular problem, you can check out the problem's test file in `src/test/java`.)
 
 ## Problems
 
