@@ -24,6 +24,7 @@ The project uses [sbt](http://www.scala-sbt.org/) so a simple `sbt clean compile
 * [Fibonacci Modified](https://www.hackerrank.com/challenges/fibonacci-modified)
 * [Flower Garden](http://community.topcoder.com/stat?c=problem_statement&pm=1918&rd=5006)
 * [Jewelry](https://community.topcoder.com/stat?c=problem_statement&pm=1166&rd=4705)
+* [Largest Independent Set](http://www.geeksforgeeks.org/largest-independent-set-proble)
 * [Longest Balanced Subsequence](http://stackoverflow.com/questions/13074163/longest-subsequence-of-s-that-is-balanced)
 * [Longest Increasing Subsequence](http://people.csail.mit.edu/bdean/6.046/dp/)
 * [Longest Zig-Zag Sequence](http://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493)
