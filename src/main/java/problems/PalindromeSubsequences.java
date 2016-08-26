@@ -15,7 +15,7 @@ import java.util.List;
  * "aba"
  * "aca"
  * 
- * @param <T> Type of sequence elements (equals method must be defined)
+ * @param <T> Type of sequence elements (equals method must be defined).
  * @author Hardik
  */
 public class PalindromeSubsequences<T> {
