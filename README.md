@@ -27,6 +27,7 @@ The project uses [sbt](http://www.scala-sbt.org/) so a simple `sbt clean compile
 * [Largest Independent Set](http://www.geeksforgeeks.org/largest-independent-set-proble)
 * [Longest Balanced Subsequence](http://stackoverflow.com/questions/13074163/longest-subsequence-of-s-that-is-balanced)
 * [Longest Increasing Subsequence](http://people.csail.mit.edu/bdean/6.046/dp/)
+* [Longest Unique Substring](http://codercareer.blogspot.ca/2013/11/no-49-longest-substring-without.html)
 * [Longest Zig-Zag Sequence](http://community.topcoder.com/stat?c=problem_statement&pm=1259&rd=4493)
 * [Maximum Subarray Sum](http://codercareer.blogspot.ca/2011/09/no-03-maximum-sum-of-all-sub-arrays.html)
 * [Minimum Change](http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=dynProg)
